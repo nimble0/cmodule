@@ -14,4 +14,16 @@ set(CMODULE_CACHE_SOURCE_DIR ${CMODULE_USER_HOME_DIR}/.cmodule CACHE PATH "Folde
 set(CMODULE_SHARED_LIBS NO CACHE BOOL "Prefer to build shared libs instead of static libs")
 set(CMODULE_DISABLE_WARNINGS YES CACHE BOOL "Disable all compiler warnings for libs built by cmodule")
 
-set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake" ${CMAKE_MODULE_PATH} PARENT_SCOPE)
+set(CMODULE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake" PARENT_SCOPE)
+
+macro(_find_package)
+	find_package(${ARGN})
+endmacro()
+
+macro(find_package)
+	set(TEMP ${CMAKE_MODULE_PATH})
+	list(PREPEND CMAKE_MODULE_PATH ${CMODULE_MODULE_PATH})
+	_find_package(${ARGN})
+	set(CMAKE_MODULE_PATH ${TEMP})
+endmacro()
+

@@ -37,13 +37,6 @@ macro(cmodule_restore_local_options)
   set_property(DIRECTORY PROPERTY COMPILE_OPTIONS ${cmodule_compile_options_backup})
 endmacro()
 
-macro(find_package_next name)
-  set(TEMP ${CMAKE_MODULE_PATH})
-  list(REMOVE_ITEM CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}")
-  find_package(${name})
-  set(CMAKE_MODULE_PATH ${TEMP})
-endmacro()
-
 macro(cmodule_select_target shared static)
   if(CMODULE_SHARED_LIB)
     set(CMODULE_TARGET ${shared})
